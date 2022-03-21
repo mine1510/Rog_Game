@@ -15,6 +15,7 @@ public class GameStart extends JComponent implements Runnable, KeyListener { //R
     public static int width = 1600, height = 900, px=740,py=340;
     private boolean running; //переменная показывающая запущена ли игру
     Image player,paper;
+    public static boolean upd = false;
 
 
     public void start(){
@@ -31,8 +32,10 @@ public class GameStart extends JComponent implements Runnable, KeyListener { //R
          while (running){
              delta = System.currentTimeMillis() - lastTime; //разница между кадрами
              lastTime = System.currentTimeMillis(); //обновление времени
+             if (upd = true) {
+                 render(getGraphics());
+             }
              update(delta);
-             render(getGraphics());
          }
     }
 
@@ -55,7 +58,7 @@ public class GameStart extends JComponent implements Runnable, KeyListener { //R
     }
 
     public void update(long delta){
-
+        upd = false;
     }
 
     public void render (Graphics g){
@@ -92,35 +95,43 @@ public class GameStart extends JComponent implements Runnable, KeyListener { //R
         if (e.getKeyCode()==KeyEvent.VK_RIGHT){
             px+= 1;
             renderStatic(getGraphics());
+            upd = true;
         }
         if (e.getKeyCode()==KeyEvent.VK_LEFT){
             px-= 1;
             renderStatic(getGraphics());
+            upd = true;
         }
         if (e.getKeyCode()==KeyEvent.VK_UP){
             py-= 1;
             renderStatic(getGraphics());
+            upd = true;
         }
         if (e.getKeyCode()==KeyEvent.VK_DOWN){
             py+= 1;
             renderStatic(getGraphics());
+            upd = true;
         }
 
         if (e.getKeyCode()==KeyEvent.VK_D){
             px+= 1;
             renderStatic(getGraphics());
+            upd = true;
         }
         if (e.getKeyCode()==KeyEvent.VK_A){
             px-= 1;
             renderStatic(getGraphics());
+            upd = true;
         }
         if (e.getKeyCode()==KeyEvent.VK_W){
             py-= 1;
             renderStatic(getGraphics());
+            upd = true;
         }
         if (e.getKeyCode()==KeyEvent.VK_S){
             py+= 1;
             renderStatic(getGraphics());
+            upd = true;
         }
 
 
