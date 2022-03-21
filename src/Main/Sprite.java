@@ -1,11 +1,6 @@
 package Main;
-import com.sun.tools.javac.Main;
 
-import javax.imageio.ImageIO;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
+import java.awt.*;
 
 public class Sprite {
     private Image image; //изображение
@@ -25,12 +20,4 @@ public class Sprite {
         g.drawImage(image,x,y,null);
     }
 
-    public void getSprite(String path){
-        try{
-            image = ImageIO.read(new File("/Assets/Image/player_1.png"));
-        }
-        catch (IOException e){
-            System.out.println("Неверный путь к картинке");
-        }
-    }
 }
