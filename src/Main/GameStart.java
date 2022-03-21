@@ -17,6 +17,7 @@ public class GameStart extends JComponent implements Runnable, KeyListener { //R
     private boolean running; //переменная показывающая запущена ли игра
 
     Image player;
+    Image paper;
 
 
     public void start(){
@@ -29,7 +30,7 @@ public class GameStart extends JComponent implements Runnable, KeyListener { //R
          long delta;
 
          init();
-
+        renderStatic(getGraphics());
          while (running){
              delta = System.currentTimeMillis() - lastTime; //разница между кадрами
              lastTime = System.currentTimeMillis(); //обновление времени
@@ -38,10 +39,20 @@ public class GameStart extends JComponent implements Runnable, KeyListener { //R
          }
     }
 
+    private void renderStatic(Graphics g) {
+        Graphics2D g2 = (Graphics2D)g;
+        g2.drawImage(paper,0,0,null);
+    }
+
     public void init(){
         try {
             player = ImageIO.read(new File("Assets/Image/player_1.png"));
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try{
+            paper = ImageIO.read(new File("Assets/Image/papper.jpg"));
+        } catch (IOException e){
             e.printStackTrace();
         }
     }
@@ -52,7 +63,7 @@ public class GameStart extends JComponent implements Runnable, KeyListener { //R
 
     public void render (Graphics g){
         Graphics2D g2 = (Graphics2D)g;
-        g2.drawImage(player,30,30,null);
+        g2.drawImage(player,740,340,null);
     }
 
 
