@@ -12,12 +12,9 @@ import java.io.IOException;
 import java.net.URL;
 
 public class GameStart extends JComponent implements Runnable, KeyListener { //Runnable нужен для многопоточности KeyListener для чтения нажатий
-    public static int width = 1600;
-    public static int height = 900;
-    private boolean running; //переменная показывающая запущена ли игра
-
-    Image player;
-    Image paper;
+    public static int width = 1600, height = 900, px=740,py=340;
+    private boolean running; //переменная показывающая запущена ли игру
+    Image player,paper;
 
 
     public void start(){
@@ -51,7 +48,7 @@ public class GameStart extends JComponent implements Runnable, KeyListener { //R
             e.printStackTrace();
         }
         try{
-            paper = ImageIO.read(new File("Assets/Image/papper.jpg"));
+            paper = ImageIO.read(new File("Assets/Image/paper.jpg"));
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -63,7 +60,7 @@ public class GameStart extends JComponent implements Runnable, KeyListener { //R
 
     public void render (Graphics g){
         Graphics2D g2 = (Graphics2D)g;
-        g2.drawImage(player,740,340,null);
+        g2.drawImage(player,px,py,null);
     }
 
 
@@ -92,6 +89,40 @@ public class GameStart extends JComponent implements Runnable, KeyListener { //R
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode()==KeyEvent.VK_RIGHT){
+            px+= 1;
+            renderStatic(getGraphics());
+        }
+        if (e.getKeyCode()==KeyEvent.VK_LEFT){
+            px-= 1;
+            renderStatic(getGraphics());
+        }
+        if (e.getKeyCode()==KeyEvent.VK_UP){
+            py-= 1;
+            renderStatic(getGraphics());
+        }
+        if (e.getKeyCode()==KeyEvent.VK_DOWN){
+            py+= 1;
+            renderStatic(getGraphics());
+        }
+
+        if (e.getKeyCode()==KeyEvent.VK_D){
+            px+= 1;
+            renderStatic(getGraphics());
+        }
+        if (e.getKeyCode()==KeyEvent.VK_A){
+            px-= 1;
+            renderStatic(getGraphics());
+        }
+        if (e.getKeyCode()==KeyEvent.VK_W){
+            py-= 1;
+            renderStatic(getGraphics());
+        }
+        if (e.getKeyCode()==KeyEvent.VK_S){
+            py+= 1;
+            renderStatic(getGraphics());
+        }
+
 
     }
 
