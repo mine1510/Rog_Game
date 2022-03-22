@@ -5,18 +5,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 public class GameStart extends JComponent implements Runnable, KeyListener { //Runnable нужен для многопоточности KeyListener для чтения нажатий
-    public static int width = 1600, height = 900, px=740,py=340;
+    public static int width = 1600, height = 900, px=740,py=340, arrowNumber = 0;
+    public static int[] arrowX = new int[10], arrowY = new int[10];
     private boolean running; //переменная показывающая запущена ли игру
-    Image player,paper;
+    Image player,paper,enemybBall,enemyRectangle,arrowUp,arrowLeft,arrowDown,arrowRight;
     public static boolean upd = false;
-
 
     public void start(){
         running = true;
@@ -24,24 +21,14 @@ public class GameStart extends JComponent implements Runnable, KeyListener { //R
     }
 
     public void run(){ //функция run появляется при имплементировании Runnable
-         long lastTime = System.currentTimeMillis();
-         long delta;
-
          init();
         renderStatic(getGraphics());
-         while (running){
-             delta = System.currentTimeMillis() - lastTime; //разница между кадрами
-             lastTime = System.currentTimeMillis(); //обновление времени
-             if (upd = true) {
-                 render(getGraphics());
-             }
-             update(delta);
-         }
     }
 
     private void renderStatic(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
         g2.drawImage(paper,0,0,null);
+        g2.drawImage(player,px,py,null);
     }
 
     public void init(){
@@ -50,22 +37,38 @@ public class GameStart extends JComponent implements Runnable, KeyListener { //R
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try{
+
+        try {
             paper = ImageIO.read(new File("Assets/Image/paper.jpg"));
-        } catch (IOException e){
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            arrowDown = ImageIO.read(new File("Assets/Image/ArrowDown.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+        arrowLeft = ImageIO.read(new File("Assets/Image/ArrowLeft.png"));
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void update(long delta){
+    public void update(){
         upd = false;
+        for (int i=0; i<10; i++){
+            arrowX[i]++;
+            arrowY[i]++;
+            renderArrow(getGraphics(), i);
+        }
     }
 
-    public void render (Graphics g){
+    public void renderArrow (Graphics g, int arrowNumber){
         Graphics2D g2 = (Graphics2D)g;
-        g2.drawImage(player,px,py,null);
+        g2.drawImage(arrowDown,arrowX[arrowNumber],arrowY[arrowNumber],null);
     }
-
 
 
     public static void main(String[] args) {
@@ -133,8 +136,16 @@ public class GameStart extends JComponent implements Runnable, KeyListener { //R
             renderStatic(getGraphics());
             upd = true;
         }
-
-
+        if (e.getKeyCode()==KeyEvent.VK_SPACE){
+            renderArrow(getGraphics(), arrowNumber);
+            if(arrowNumber<10){
+            arrowNumber++;
+            } else {
+                arrowNumber = 0;
+            }
+            arrowX[arrowNumber]= px;
+            arrowY[arrowNumber]= py;
+        }
     }
 
     @Override
